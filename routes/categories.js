@@ -2,6 +2,17 @@ const express = require("express");
 const router = express.Router();
 const validateObjectId = require("../middlewares/validateObjectId")();
 const { Category, validateCategory } = require("../models/category");
+const { Truck } = require("../models/truck");
+
+async function updateCategoryInTruck(category) {
+  const trucks = await Truck.find({ category });
+  const { name } = await Category.findById(category._id).select("-_id name");
+  trucks.map(async (truck) => {
+    await Truck.findByIdAndUpdate(truck._id, {
+      category: { _id: category._id, name },
+    });
+  });
+}
 
 router.get("/", async (req, res) => {
   const categories = await Category.find({}).select("-__v");
@@ -27,11 +38,14 @@ router.put("/:id", validateObjectId, async (req, res) => {
   const { error } = validateCategory(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const category = await Category.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
+  const category = await Category.findByIdAndUpdate(
+    req.params.id,
+    req.body
+  ).select("-__v");
+
   if (!category) return res.status(404).send("Category not exist");
 
+  updateCategoryInTruck(category);
   res.status(200).send(category);
 });
 
