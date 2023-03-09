@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+const { categorySchema } = require("./category");
 
 const TruckModel = new mongoose.Schema({
   name: {
@@ -15,7 +16,7 @@ const TruckModel = new mongoose.Schema({
     required: true,
   },
   category: {
-    type: String,
+    type: categorySchema,
     required: true,
   },
   fuelType: {
@@ -24,7 +25,6 @@ const TruckModel = new mongoose.Schema({
   },
   rcDetails: {
     type: Boolean,
-    required: true,
     default: false,
   },
 });
@@ -35,14 +35,12 @@ function validateTruck(truck) {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
     owner: Joi.string().min(3).required(),
-    category: Joi.string().required(),
+    categoryId: Joi.objectId(),
     fuelType: Joi.string().required(),
     rcDetails: Joi.boolean(),
   });
   return schema.validate(truck);
 }
 
-module.exports = {
-  Truck,
-  validateTruck,
-};
+exports.Truck = Truck;
+exports.validateTruck = validateTruck;
