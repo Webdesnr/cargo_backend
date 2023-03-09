@@ -5,11 +5,12 @@ const error = require("./middlewares/error");
 const mongoose = require("mongoose");
 const trucks = require("./routes/trucks");
 const categories = require("./routes/categories");
+const config = require("config");
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 
 mongoose
-  .connect("mongodb://localhost:27017/backend_cargo", {
+  .connect(config.get("database.url"), {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -25,5 +26,5 @@ app.use("/api/trucks", trucks);
 app.use("/api/categories", categories);
 app.use(error);
 
-const port = process.env.port || 3000;
+const port = config.get("server.port");
 app.listen(port, console.log(`listen to the port ${port}`));
