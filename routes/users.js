@@ -5,6 +5,7 @@ const _ = require("lodash");
 const { User, validateUser } = require("../models/user");
 const validateObjectId = require("../middlewares/validateObjectId")();
 const auth = require("../middlewares/auth");
+const admin = require("../middlewares/admin");
 
 router.get("/", auth, async (req, res) => {
   const users = await User.find({});
@@ -16,7 +17,7 @@ router.get("/me", auth, async (req, res) => {
   res.status(200).send(_.pick(user, ["username", "isAdmin"]));
 });
 
-router.post("/", auth, async (req, res) => {
+router.post("/", async (req, res) => {
   const { error } = validateUser(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -32,7 +33,7 @@ router.post("/", auth, async (req, res) => {
   res.status(200).send(user);
 });
 
-router.put("/:id", auth, validateObjectId, async (req, res) => {
+router.put("/:id", [auth, admin], validateObjectId, async (req, res) => {
   const { error } = validateUser(req.body);
   if (error) return res.send(error.details[0].message).status(400);
 
@@ -42,7 +43,7 @@ router.put("/:id", auth, validateObjectId, async (req, res) => {
   res.status(200).send(user);
 });
 
-router.delete("/:id", auth, validateObjectId, async (req, res) => {
+router.delete("/:id", [auth, admin], validateObjectId, async (req, res) => {
   const user = await User.findByIdAndDelete(req.params.id);
   res.status(200).send(user);
 });

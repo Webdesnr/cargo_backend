@@ -1,4 +1,5 @@
 const express = require("express");
+const admin = require("../middlewares/admin");
 const router = express.Router();
 const validateObjectId = require("../middlewares/validateObjectId")();
 const auth = require("../middlewares/auth");
@@ -49,7 +50,7 @@ router.put("/:id", auth, validateObjectId, async (req, res) => {
   res.status(200).send(category);
 });
 
-router.delete("/:id", validateObjectId, auth, async (req, res) => {
+router.delete("/:id", validateObjectId, [auth, admin], async (req, res) => {
   const category = await Category.findByIdAndDelete(req.params.id);
   if (!category) return res.send("Category not exist").status(404);
   res.send(category).status(200);

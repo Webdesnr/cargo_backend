@@ -9,7 +9,7 @@ const error = require("./middlewares/error");
 const trucks = require("./routes/trucks");
 const categories = require("./routes/categories");
 const users = require("./routes/users");
-const login = require("./routes/auth");
+const login = require("./routes/login");
 
 mongoose
   .connect(config.get("database.url"), {

@@ -31,6 +31,7 @@ userSchema.methods.generateToken = function () {
       _id: this._id,
       email: this.email,
       username: this.username,
+      isAdmin: this.isAdmin,
     },
     config.get("jwtPrivateKey")
   );
