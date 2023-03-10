@@ -9,6 +9,7 @@ const error = require("./middlewares/error");
 const trucks = require("./routes/trucks");
 const categories = require("./routes/categories");
 const users = require("./routes/users");
+const login = require("./routes/auth");
 
 mongoose
   .connect(config.get("database.url"), {
@@ -31,6 +32,7 @@ app.use(express.json());
 app.use("/api/trucks", trucks);
 app.use("/api/categories", categories);
 app.use("/api/users", users);
+app.use("/api/login", login);
 app.use(error);
 
 const port = config.get("server.port");

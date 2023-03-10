@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const validateObjectId = require("../middlewares/validateObjectId")();
+const auth = require("../middlewares/auth");
 const { Category, validateCategory } = require("../models/category");
 const { Truck } = require("../models/truck");
 
@@ -26,7 +27,7 @@ router.get("/:id", validateObjectId, async (req, res) => {
   res.status(200).send(category);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const { error } = validateCategory(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -34,7 +35,7 @@ router.post("/", async (req, res) => {
   res.status(200).send(category);
 });
 
-router.put("/:id", validateObjectId, async (req, res) => {
+router.put("/:id", auth, validateObjectId, async (req, res) => {
   const { error } = validateCategory(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -48,7 +49,7 @@ router.put("/:id", validateObjectId, async (req, res) => {
   res.status(200).send(category);
 });
 
-router.delete("/:id", validateObjectId, async (req, res) => {
+router.delete("/:id", validateObjectId, auth, async (req, res) => {
   const category = await Category.findByIdAndDelete(req.params.id);
   if (!category) return res.send("Category not exist").status(404);
   res.send(category).status(200);
