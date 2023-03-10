@@ -1,13 +1,14 @@
 const express = require("express");
-const app = express();
 require("express-async-errors");
-const error = require("./middlewares/error");
+const app = express();
 const mongoose = require("mongoose");
-const trucks = require("./routes/trucks");
-const categories = require("./routes/categories");
-const config = require("config");
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
+const config = require("config");
+const error = require("./middlewares/error");
+const trucks = require("./routes/trucks");
+const categories = require("./routes/categories");
+const users = require("./routes/users");
 
 mongoose
   .connect(config.get("database.url"), {
@@ -24,6 +25,7 @@ process.on("unhandledRejection", (ex) => {
 app.use(express.json());
 app.use("/api/trucks", trucks);
 app.use("/api/categories", categories);
+app.use("/api/users", users);
 app.use(error);
 
 const port = config.get("server.port");

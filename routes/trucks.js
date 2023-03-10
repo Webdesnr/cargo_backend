@@ -1,4 +1,4 @@
-const validateObjectId = require("../middlewares/validateObjectId");
+const validateObjectId = require("../middlewares/validateObjectId")();
 const express = require("express");
 const router = express.Router();
 const { Truck, validateTruck } = require("../models/truck");

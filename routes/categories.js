@@ -38,10 +38,9 @@ router.put("/:id", validateObjectId, async (req, res) => {
   const { error } = validateCategory(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const category = await Category.findByIdAndUpdate(
-    req.params.id,
-    req.body
-  ).select("-__v");
+  const category = await Category.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  }).select("-__v");
 
   if (!category) return res.status(404).send("Category not exist");
 
