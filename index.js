@@ -18,6 +18,11 @@ mongoose
   .then(() => console.log("connected to mongodb"))
   .catch((er) => console.log(er));
 
+if (!process.env.jwtPrivateKey) {
+  console.error("JwtPrivateKey is not be empty!");
+  process.exit(1);
+}
+
 process.on("unhandledRejection", (ex) => {
   throw ex;
 });
