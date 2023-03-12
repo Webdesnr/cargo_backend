@@ -21,10 +21,13 @@ router.post("/", async (req, res) => {
   const { error } = validateUser(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
+  let user = User.findOne({ email: req.body.email });
+  if (user) return res.status(409).send("User already exists");
+
   const hashPassword = await bcrypt.hash(req.body.password, 10);
   req.body.password = hashPassword;
 
-  let user = await User.create(req.body);
+  user = await User.create(req.body);
   const token = user.generateToken();
 
   res.setHeader("x-auth-token", token);

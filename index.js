@@ -11,6 +11,15 @@ const categories = require("./routes/categories");
 const users = require("./routes/users");
 const login = require("./routes/login");
 
+if (!config.get("jwtPrivateKey")) {
+  console.error("FATAL ERROR:jwtPrivateKey is not defined!");
+  process.exit(1);
+}
+
+process.on("unhandledRejection", (ex) => {
+  throw ex;
+});
+
 mongoose
   .connect(config.get("database.url"), {
     useNewUrlParser: true,
@@ -18,15 +27,6 @@ mongoose
   })
   .then(() => console.log("connected to mongodb"))
   .catch((er) => console.log(er));
-
-if (!process.env.jwtPrivateKey) {
-  console.error("JwtPrivateKey is not be empty!");
-  process.exit(1);
-}
-
-process.on("unhandledRejection", (ex) => {
-  throw ex;
-});
 
 app.use(express.json());
 app.use("/api/trucks", trucks);
