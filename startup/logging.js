@@ -5,10 +5,10 @@ require("winston-mongodb");
 
 module.exports = function () {
   winston.exceptions.handle(
-    new winston.transports.File({ filename: "log/unCaughtExceptions.log" })
+    new winston.transports.File({ filename: "unCaughtExceptions.log" })
   );
 
-  winston.add(new winston.transports.File({ filename: "log/app.log" }));
+  winston.add(new winston.transports.File({ filename: "app.log" }));
   winston.add(
     new winston.transports.MongoDB({
       db: config.get("database.url"),
@@ -18,7 +18,7 @@ module.exports = function () {
     })
   );
   winston.add(
-    new winston.transports.File({ filename: "log/error.log", level: "error" })
+    new winston.transports.File({ filename: "error.log", level: "error" })
   );
   winston.add(
     new winston.transports.Console({
