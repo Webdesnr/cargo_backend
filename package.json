@@ -4,15 +4,21 @@
   "description": "cargo transportation service",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "16.13.0"
   },
   "author": "amarjothi",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "compression": "^1.7.4",
     "config": "^3.3.9",
     "express-async-errors": "^3.1.1",
     "express.js": "^1.0.0",
+    "helmet": "^6.0.1",
     "joi": "^17.8.3",
     "joi-objectid": "^4.0.2",
     "jsonwebtoken": "^9.0.0",

@@ -1,3 +1,4 @@
 {
-    "jwtPrivateKey" : "cargo_api_Key"
+    "jwtPrivateKey" : "cargo_api_Key",
+    "database" : "cargo_db"
 }
