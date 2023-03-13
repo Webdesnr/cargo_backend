@@ -11,7 +11,7 @@ module.exports = function () {
   winston.add(new winston.transports.File({ filename: "app.log" }));
   winston.add(
     new winston.transports.MongoDB({
-      db: config.get("database.url"),
+      db: config.get("database"),
       options: { useUnifiedTopology: true },
       collection: "logs",
       level: "error",

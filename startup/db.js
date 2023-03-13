@@ -4,7 +4,7 @@ const winston = require("winston");
 
 module.exports = function () {
   mongoose
-    .connect(config.get("database.url"), {
+    .connect(config.get("database"), {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })

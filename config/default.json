@@ -3,8 +3,6 @@
         "port":3000,
         "hostname": "localhost"
     },
-    "database":{
-        "url":"mongodb://localhost:27017/backend_cargo"
-    },
+    "database": "mongodb://localhost:27017/backend_cargo",
     "jwtPrivateKey":""
 }
