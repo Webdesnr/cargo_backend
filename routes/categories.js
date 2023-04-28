@@ -46,7 +46,7 @@ router.put("/:id", auth, validateObjectId, async (req, res) => {
 
   if (!category) return res.status(404).send("Category not exist");
 
-  updateCategoryInTruck(category);
+  await updateCategoryInTruck(category);
   res.status(200).send(category);
 });
 

@@ -1,7 +1,7 @@
 const config = require("config");
-require("express-async-errors");
 const winston = require("winston");
-require("winston-mongodb");
+// require("winston-mongodb");
+require("express-async-errors");
 
 module.exports = function () {
   winston.exceptions.handle(
@@ -9,14 +9,14 @@ module.exports = function () {
   );
 
   winston.add(new winston.transports.File({ filename: "app.log" }));
-  winston.add(
-    new winston.transports.MongoDB({
-      db: config.get("database"),
-      options: { useUnifiedTopology: true },
-      collection: "logs",
-      level: "error",
-    })
-  );
+  // winston.add(
+  //   new winston.transports.MongoDB({
+  //     db: config.get("database"),
+  //     options: { useUnifiedTopology: true },
+  //     collection: "logs",
+  //     level: "error",
+  //   })
+  // );
   winston.add(
     new winston.transports.File({ filename: "error.log", level: "error" })
   );
